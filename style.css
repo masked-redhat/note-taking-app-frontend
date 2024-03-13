@@ -1,0 +1,170 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+    --color-1: #051821;
+    --color-2: #1a4645;
+    --color-3: #266867;
+    --color-4: #f58800;
+    --color-5: #f8bc24;
+}
+
+/* Reset */
+button {
+    background: initial;
+    border: initial;
+    cursor: pointer;
+}
+
+li {
+    list-style: none;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Noto Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings:
+        "wdth" 100;
+    color: white;
+}
+
+body {
+    background: var(--color-1);
+}
+
+#header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    min-height: 5rem;
+    padding: 1rem;
+}
+
+#titleLogo {
+    font-weight: 900;
+}
+
+#navBar {
+    border-radius: 30px;
+    border: 1px solid var(--color-4);
+    padding: 0.3rem;
+    background-color: color-mix(in srgb, var(--color-2) 50%, transparent);
+}
+
+#navBar ul {
+    display: flex;
+    gap: 1rem;
+}
+
+#navBar button {
+    font-weight: 500;
+    padding: 0.4rem 0.7rem;
+    border-radius: 30rem;
+    color: var(--color-5);
+    transition-property: background-color, color;
+    transition-duration: 0.2s;
+}
+
+#navBar button:hover {
+    background-color: var(--color-5);
+    color: black;
+}
+
+.dateNote {
+    margin: 0 1rem 1rem;
+}
+
+.notesHeader {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.icon {
+    --icon-size: 1.4rem;
+    width: var(--icon-size);
+    height: var(--icon-size);
+    padding: 0.2rem;
+    filter: invert(1);
+}
+
+.noteTime {
+    text-wrap: nowrap;
+    font-size: 1.2rem;
+    font-weight: 200;
+}
+
+.line {
+    width: 100%;
+    border-top: 1px solid;
+}
+
+.notes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.note {
+    --note-size: 350px;
+    width: var(--note-size);
+    height: var(--note-size);
+    background: var(--color-3);
+    border: 1px solid var(--color-3);
+    border-radius: 20px;
+    border-top-left-radius: 0;
+    overflow: hidden;
+}
+
+.noteHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.4rem;
+    background: var(--color-5);
+}
+
+.noteHeader h3 {
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--color-1);
+}
+
+.noteHeader .icon {
+    cursor: pointer;
+    filter: none;
+}
+
+.noteOptions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.noteOptions li {
+    display: flex;
+}
+
+.noteContent {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 1.4rem;
+    font-weight: 300;
+    font-size: 1.05rem;
+    line-height: 1.4rem;
+}
+
+main {
+    border-bottom: 1px solid;
+}
+
+#footer {
+    margin: 3.2rem auto;
+    width: fit-content;
+}

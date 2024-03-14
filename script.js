@@ -7,7 +7,8 @@ clearAllNotesBtn.onclick = () => {
 }
 
 newNoteBtn.onclick = () => {
-    document.body.scrollTop = document.documentElement.scrollTop = 0;
+
+    scrollTop();
 
     if (newNoteBtn.innerText == 'New Note') {
         newNoteBtn.innerText = 'Show All Notes';

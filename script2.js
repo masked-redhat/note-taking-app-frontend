@@ -20,44 +20,6 @@ const getTodayDate = (dateTime = '') => {
     return [dateInWords, dateInNum];
 }
 
-const createNote = async (data) => {
-    let note = document.createElement('article');
-    note.className = 'note';
-
-    let noteHeader = document.createElement('header');
-    noteHeader.className = 'noteHeader';
-
-    let noteHeading = document.createElement('h3');
-    noteHeading.textContent = data.title;
-
-    let noteOptions = document.createElement('ul');
-    noteOptions.className = 'noteOptions';
-
-    for (const imgName of [{ name: 'edit.svg', alt: 'edit note' }, { name: 'trash.svg', alt: 'delete note' }]) {
-        let li = document.createElement('li')
-        let imgIcon = document.createElement('img');
-        imgIcon.className = 'icon';
-        imgIcon.src = imgName.name;
-        imgIcon.alt = imgName.alt;
-        li.append(imgIcon);
-        noteOptions.append(li);
-    }
-
-    let noteContent = document.createElement('p');
-    noteContent.className = 'noteContent';
-    noteContent.innerText = data.text;
-
-    // let copyBtn = document.createElement('btn');
-
-    noteHeader.append(noteHeading);
-    noteHeader.append(noteOptions);
-
-    note.append(noteHeader);
-    note.append(noteContent);
-
-    return note;
-}
-
 const createNewNoteForm = () => {
     let form = document.createElement('form');
     form.id = 'noteForm';
@@ -109,15 +71,17 @@ const createNewNoteForm = () => {
 
     form.addEventListener('keydown', (keyEvent) => {
         if (keyEvent.ctrlKey && keyEvent.shiftKey && keyEvent.key == 'S') {
-            saveNoteBtnFunc();
+            formHeader.children[1].click();
         }
     })
 
     notesSection.textContent = '';
     notesSection.append(form);
+
+    return [titleInput, noteContent, formHeader.children[1], formHeader.children[2]];
 }
 
-const createNoteSection = async (notes, date) => {
+const createNoteSection = (notes, date) => {
     let article = document.createElement('article');
     article.className = 'dateNote';
     article.id = date[0];
@@ -143,7 +107,7 @@ const createNoteSection = async (notes, date) => {
     for (const data in notes) {
         let div = document.createElement('div');
         div.className = 'noteContainer';
-        let note = await createNote(notes[data]);
+        let note = createNote(notes[data], data, article.id);
         div.append(note);
         articleSection.prepend(div);
     }
@@ -224,5 +188,110 @@ const saveNote = (title, text, date) => {
 }
 
 const closeNote = () => {
-    newNoteBtn.click();
+    newNoteBtn.innerText = 'New Note';
+    scrollTop()
+    notesSection.textContent = '';
+    createTimeNotes();
+}
+
+
+const createNote = (data, noteNumber, date) => {
+    let note = document.createElement('article');
+    note.className = 'note';
+    note.dataset.number = 1;
+
+    let noteHeader = document.createElement('header');
+    noteHeader.className = 'noteHeader';
+
+    let noteHeading = document.createElement('h3');
+    noteHeading.textContent = data.title;
+
+    let noteOptions = document.createElement('ul');
+    noteOptions.className = 'noteOptions';
+
+    for (const imgName of [{ name: 'edit.svg', alt: 'edit note', func: editNoteBtn }, { name: 'trash.svg', alt: 'delete note', func: deleteNoteBtn }]) {
+        let btn = document.createElement('button')
+        let imgIcon = document.createElement('img');
+        imgIcon.className = 'icon';
+        imgIcon.src = imgName.name;
+        imgIcon.alt = imgName.alt;
+        btn.append(imgIcon);
+        btn.dataset.number = noteNumber;
+        imgIcon.dataset.number = noteNumber;
+        btn.dataset.date = date;
+        imgIcon.dataset.date = date;
+        btn.onclick = (e) => { imgName.func(e) };
+        noteOptions.append(btn);
+    }
+
+    let noteContent = document.createElement('p');
+    noteContent.className = 'noteContent';
+    noteContent.innerText = data.text;
+
+    // let copyBtn = document.createElement('btn');
+
+    noteHeader.append(noteHeading);
+    noteHeader.append(noteOptions);
+
+    note.append(noteHeader);
+    note.append(noteContent);
+
+    return note;
+}
+
+const deleteNoteBtn = (e) => {
+    let index = e.target.dataset.number;
+    let date = e.target.dataset.date;
+    let notes = JSON.parse(localStorage.getItem(date));
+    delete notes[index];
+    index = 0;
+    let newNotes = {};
+    for (const num in notes) {
+        newNotes[index] = notes[num];
+        index += 1;
+    }
+    if (!index) {
+        localStorage.removeItem(date);
+    }
+    else {
+        newNotes = JSON.stringify(newNotes);
+        localStorage.setItem(date, newNotes);
+    }
+    notesSection.textContent = '';
+    createTimeNotes();
+}
+
+const editNoteBtn = (e) => {
+    let index = e.target.dataset.number;
+    let date = e.target.dataset.date;
+    let notes = JSON.parse(localStorage.getItem(date));
+    let data = notes[index];
+    let [titleInput, noteContent, btns] = editNote(data.title, data.text);
+    btns[0].onclick = (e) => {
+        e.preventDefault();
+        let newTitle = titleInput.value;
+        let newText = noteContent.value;
+        notes[index] = { title: newTitle, text: newText };
+        notes = JSON.stringify(notes);
+        localStorage.setItem(date, notes);
+        notesSection.textContent = '';
+        createTimeNotes();
+    }
+    btns[1].onclick = (e) => {
+        e.preventDefault();
+        closeNote();
+    }
+}
+
+const editNote = (title, text) => {
+    scrollTop();
+    let [titleInput, noteContent, ...btns] = createNewNoteForm();
+    titleInput.value = title;
+    noteContent.value = text;
+    titleInput.focus()
+    return [titleInput, noteContent, btns];
+}
+
+const scrollTop = () => {
+    document.body.scrollTop = document.documentElement.scrollTop = 0;
 }

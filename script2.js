@@ -194,7 +194,6 @@ const createTimeNotes = () => {
 
 const saveNote = (title, text, date) => {
     let notes = localStorage.getItem(date);
-    console.log(notes);
     if (notes == null) {
         notes = '{}';
     }
@@ -203,10 +202,8 @@ const saveNote = (title, text, date) => {
     let _ = { 'title': title, 'text': text };
     let note = {}
     note[length] = _;
-    console.log(note);
     notes = Object.assign(note, notes);
     notes = JSON.stringify(notes);
-    console.log(notes)
     localStorage.setItem(date, notes);
     newNoteBtn.click();
 }

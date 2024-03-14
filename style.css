@@ -225,8 +225,12 @@ textarea::placeholder {
     outline: none;
 }
 
+input::placeholder {
+    color: color-mix(in srgb, var(--color-1) 78%, transparent);
+}
+
 textarea::placeholder {
-    color: white;
+    color: rgba(255, 255, 255, 0.78);
 }
 
 #notes {

@@ -189,11 +189,12 @@ const saveNote = (title, text, date) => {
 
 const closeNote = () => {
     newNoteBtn.innerText = 'New Note';
+    newNoteBtn.disabled = false;
+    clearAllNotesBtn.disabled = false;
     scrollTop()
     notesSection.textContent = '';
     createTimeNotes();
 }
-
 
 const createNote = (data, noteNumber, date) => {
     let note = document.createElement('article');
@@ -262,6 +263,8 @@ const deleteNoteBtn = (e) => {
 }
 
 const editNoteBtn = (e) => {
+    clearAllNotesBtn.disabled = true;
+    newNoteBtn.disabled = true;
     let index = e.target.dataset.number;
     let date = e.target.dataset.date;
     let notes = JSON.parse(localStorage.getItem(date));
@@ -274,8 +277,7 @@ const editNoteBtn = (e) => {
         notes[index] = { title: newTitle, text: newText };
         notes = JSON.stringify(notes);
         localStorage.setItem(date, notes);
-        notesSection.textContent = '';
-        createTimeNotes();
+        closeNote();
     }
     btns[1].onclick = (e) => {
         e.preventDefault();

@@ -2,8 +2,8 @@ clearAllNotesBtn.onclick = () => {
     let userAction = confirm("Do you really want to clear all your notes?");
     if (userAction) {
         localStorage.clear();
+        createTimeNotes();
     };
-    createTimeNotes();
 }
 
 newNoteBtn.onclick = () => {

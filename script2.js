@@ -20,7 +20,7 @@ const getTodayDate = (dateTime = '') => {
     return [dateInWords, dateInNum];
 }
 
-const createNote = async (data, noteNumber) => {
+const createNote = async (data) => {
     let note = document.createElement('article');
     note.className = 'note';
 
@@ -45,7 +45,7 @@ const createNote = async (data, noteNumber) => {
 
     let noteContent = document.createElement('p');
     noteContent.className = 'noteContent';
-    noteContent.textContent = data.text;
+    noteContent.innerText = data.text;
 
     // let copyBtn = document.createElement('btn');
 
@@ -81,9 +81,11 @@ const createNewNoteForm = () => {
     noteContent.placeholder = 'Note text here...';
     noteContent.tabIndex = 2;
 
-    const saveNoteBtnFunc = (e) => {
+    const saveNoteBtnFunc = (e = null) => {
         saveNote(titleInput.value, noteContent.value, getTodayDate()[0]);
-        e.preventDefault();
+        try {
+            e.preventDefault();
+        } catch { }
     }
     const cancelNoteBtnFunc = (e) => {
         closeNote();
@@ -104,6 +106,12 @@ const createNewNoteForm = () => {
     form.append(formHeader)
 
     form.append(noteContent);
+
+    form.addEventListener('keydown', (keyEvent) => {
+        if (keyEvent.ctrlKey && keyEvent.shiftKey && keyEvent.key == 'S') {
+            saveNoteBtnFunc();
+        }
+    })
 
     notesSection.textContent = '';
     notesSection.append(form);
@@ -135,7 +143,7 @@ const createNoteSection = async (notes, date) => {
     for (const data in notes) {
         let div = document.createElement('div');
         div.className = 'noteContainer';
-        let note = await createNote(notes[data], data);
+        let note = await createNote(notes[data]);
         div.append(note);
         articleSection.prepend(div);
     }
@@ -194,7 +202,11 @@ const createTimeNotes = () => {
 
 const saveNote = (title, text, date) => {
     if (title.trim() == '') {
+        closeNote();
         return;
+    }
+    if (text.trim() == '') {
+        text = 'Nothing Here...'
     }
     let notes = localStorage.getItem(date);
     if (notes == null) {

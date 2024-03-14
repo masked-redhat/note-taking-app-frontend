@@ -181,8 +181,8 @@ body {
 }
 
 .noteContent {
-    overflow: hidden;
-    text-overflow: ellipsis;
+    overflow: auto;
+    height: 69%;
     margin: 1.4rem;
     font-weight: 300;
     font-size: 1.05rem;
@@ -268,4 +268,20 @@ textarea::placeholder {
     background: color-mix(in srgb, var(--color-2) 15%, transparent);
     color: color-mix(in srgb, var(--color-4) 80%, transparent);
     border-radius: 20px;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--color-1);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--color-2);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--color-4);
 }

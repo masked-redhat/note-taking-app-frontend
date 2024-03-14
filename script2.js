@@ -193,6 +193,9 @@ const createTimeNotes = () => {
 }
 
 const saveNote = (title, text, date) => {
+    if (title.trim() == '') {
+        return;
+    }
     let notes = localStorage.getItem(date);
     if (notes == null) {
         notes = '{}';

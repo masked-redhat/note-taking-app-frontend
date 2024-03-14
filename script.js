@@ -23,16 +23,5 @@ newNoteBtn.onclick = () => {
     }
 };
 
-let note = {
-    title: "Hello adfasdfasdfthis is a message",
-    text: "klfdjaldfja sdfas dflkasj dflasj fjaskdfl jasldfk aslkdf las jflasj fd"
-}
-
-
-addNoteInLocalStorage(note);
-addNoteInLocalStorage(note);
-addNoteInLocalStorage(note);
-
-
 
 createTimeNotes();

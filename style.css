@@ -289,3 +289,39 @@ textarea::placeholder {
 ::-webkit-scrollbar-thumb:hover {
     background: var(--color-4);
 }
+
+@media only screen and (max-width: 500px) {
+    :root {
+        --note-size: 100%;
+    }
+
+    .dateNote {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .icon {
+        --icon-size: 0.8rem;
+        padding: 0;
+    }
+
+    .notes {
+        padding-left: 0.5rem;
+        padding-right: 0;
+    }
+
+    .note {
+        min-height: 300px;
+        max-height: 300px;
+    }
+}
+
+@media only screen and (max-width: 450px) {
+    #titleLogo {
+        font-size: 19px;
+    }
+
+    #footer {
+        font-size: 9.5px;
+    }
+}

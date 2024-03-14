@@ -6,6 +6,7 @@
     --color-3: #266867;
     --color-4: #f58800;
     --color-5: #f8bc24;
+    --note-size: 350px;
 }
 
 /* Reset */
@@ -34,6 +35,7 @@ li {
 
 body {
     background: var(--color-1);
+    scroll-behavior: smooth;
 }
 
 #header {
@@ -44,6 +46,11 @@ body {
     margin: auto;
     min-height: 5rem;
     padding: 1rem;
+    position: sticky;
+    top: 0;
+    background: color-mix(in srgb, var(--color-1) 70%, transparent);
+    backdrop-filter: blur(5px);
+    z-index: 100;
 }
 
 #titleLogo {
@@ -55,6 +62,7 @@ body {
     border: 1px solid var(--color-4);
     padding: 0.3rem;
     background-color: color-mix(in srgb, var(--color-2) 50%, transparent);
+    /* width: 25rem; */
 }
 
 #navBar ul {
@@ -74,6 +82,13 @@ body {
 #navBar button:hover {
     background-color: var(--color-5);
     color: black;
+}
+
+
+#navBar button:disabled {
+    color: var(--color-5);
+    background: color-mix(in srgb, var(--color-4) 30%, transparent);
+    cursor: not-allowed;
 }
 
 .dateNote {
@@ -112,12 +127,17 @@ body {
     padding: 1rem;
 }
 
+.noteContainer {
+    min-width: var(--note-size);
+    min-height: var(--note-size);
+    width: var(--note-size);
+    height: var(--note-size);
+}
+
 .note {
-    --note-size: 350px;
     width: var(--note-size);
     height: var(--note-size);
     background: var(--color-3);
-    border: 1px solid var(--color-3);
     border-radius: 20px;
     border-top-left-radius: 0;
     overflow: hidden;
@@ -127,6 +147,8 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 0.3rem;
+    width: 100%;
     padding: 1rem 1.4rem;
     background: var(--color-5);
 }
@@ -135,11 +157,18 @@ body {
     font-weight: 600;
     text-transform: uppercase;
     color: var(--color-1);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .noteHeader .icon {
+    --icon-size: 2.3rem;
     cursor: pointer;
     filter: none;
+    background: var(--color-4);
+    border-radius: 4px;
+    padding: 0.5rem;
 }
 
 .noteOptions {
@@ -167,4 +196,76 @@ main {
 #footer {
     margin: 3.2rem auto;
     width: fit-content;
+    padding: 1rem;
+}
+
+.note {
+    animation: boom 0.4s cubic-bezier(0.075, 0.82, 0.165, 1) 1;
+}
+
+@keyframes boom {
+    from {
+        opacity: 0;
+        height: calc(var(--note-size) - 50px);
+        width: calc(var(--note-size) - 50px);
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+input,
+textarea,
+input::placeholder,
+textarea::placeholder {
+    background: initial;
+    border: initial;
+    color: var(--color-1);
+    outline: none;
+}
+
+textarea::placeholder {
+    color: white;
+}
+
+#notes {
+    padding: 2rem;
+}
+
+#noteForm {
+    width: 100%;
+    max-width: 800px;
+    margin: auto;
+    overflow: hidden;
+    border-radius: 20px 20px 0 0;
+}
+
+#formNoteHeading {
+    font-size: 48px;
+    border-bottom: 2px solid var(--color-1);
+    width: 100%;
+}
+
+#formNoteContent {
+    min-width: 100%;
+    max-width: 100%;
+    background: var(--color-3);
+    padding: 2rem;
+    font-size: 24px;
+    color: white;
+    min-height: var(--note-size);
+    border-bottom-left-radius: 20px;
+}
+
+#noNoteAvailable {
+    width: 100%;
+    height: 15rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    background: color-mix(in srgb, var(--color-2) 15%, transparent);
+    color: color-mix(in srgb, var(--color-4) 80%, transparent);
+    border-radius: 20px;
 }

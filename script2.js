@@ -154,10 +154,12 @@ const createTimeNotes = () => {
     let bopbop = setInterval((i = num) => {
         if (num >= 4 || num >= length) {
             clearInterval(bopbop);
-            // localStorage.clear()
         }
         else {
             let date = localStorage.key(i);
+            if (date == 'ongoing' || date == 'completed') {
+                return;
+            }
             createNoteSection(JSON.parse(localStorage.getItem(date)), getTodayDate(date));
             num++;
         }

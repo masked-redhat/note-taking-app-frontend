@@ -150,7 +150,7 @@ const createTimeNotes = () => {
         createNoNoteDiv();
         return;
     }
-    for (let i = 0; i <= 4 || i <= length - 2; i++) {
+    for (let i = 0; i < length; i++) {
         let date = localStorage.key(i);
         if (date == 'ongoing' || date == 'completed') {
             continue;

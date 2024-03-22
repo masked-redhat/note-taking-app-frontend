@@ -146,24 +146,17 @@ const createNoNoteDiv = () => {
 
 const createTimeNotes = () => {
     let length = localStorage.length;
-    let num = 0;
     if (!length) {
         createNoNoteDiv();
         return;
     }
-    let bopbop = setInterval((i = num) => {
-        if (num >= 4 || num >= length) {
-            clearInterval(bopbop);
+    for (let i = 0; i <= 4 || i <= length - 2; i++) {
+        let date = localStorage.key(i);
+        if (date == 'ongoing' || date == 'completed') {
+            continue;
         }
-        else {
-            let date = localStorage.key(i);
-            if (date == 'ongoing' || date == 'completed') {
-                return;
-            }
-            createNoteSection(JSON.parse(localStorage.getItem(date)), getTodayDate(date));
-            num++;
-        }
-    }, 0)
+        createNoteSection(JSON.parse(localStorage.getItem(date)), getTodayDate(date));
+    }
 }
 
 const saveNote = (title, text, date) => {
